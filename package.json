@@ -6,13 +6,27 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.20.0",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "graphql": "^15.3.0",
+    "graphql-request": "^3.1.0",
+    "helmet": "^4.1.1",
+    "knex": "^0.21.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "sqlite3": "^5.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "node ./server/server.js",
+    "start:server": "nodemon ./server/server.js",
+    "start:client": "react-scripts start",
+    "build:client": "react-scripts build",
+    "build:server": "node ./server/feed/feed.js",
+    "build": "npm run build:client && npm run build:server",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -30,5 +44,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "node-sass": "^4.14.1",
+    "nodemon": "^2.0.4"
   }
 }
