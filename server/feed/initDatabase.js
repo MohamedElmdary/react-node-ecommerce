@@ -16,6 +16,9 @@ function initDatabase() {
             table.string('gallery');
             table.string('category');
             table.string('type');
+        })
+        .createTable('Categories', (table) => {
+            table.string('data');
         });
 }
 

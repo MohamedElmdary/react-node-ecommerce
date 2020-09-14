@@ -2,9 +2,11 @@ import React, { useState, useCallback, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
+import axios from 'axios';
 
 import Header from './components/Header';
 import Sidenav from './components/Sidenav';
+import { CATEGORIES_URL } from './configs/constants';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -47,13 +49,17 @@ const useStyles = makeStyles((theme) => ({
 function Home() {
     const classes = useStyles();
     const [open, setOpen] = useState(true);
+    const [links, setLinks] = useState(null);
 
     const toggleDrawer = useCallback(() => {
         setOpen(!open);
     }, [open]);
 
     useEffect(() => {
-        console.log('should get all categories here');
+        axios.get(CATEGORIES_URL).then((categories) => {
+            console.log(categories);
+            setLinks(categories);
+        });
     }, []);
 
     return (
@@ -68,7 +74,7 @@ function Home() {
                     paper: classes.drawerPaper,
                 }}
             >
-                <Sidenav />
+                <Sidenav links={links} />
             </Drawer>
             <main
                 className={clsx(classes.content, {

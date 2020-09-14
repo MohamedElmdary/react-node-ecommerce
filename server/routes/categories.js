@@ -1,27 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { getTypes } = require('../feed/getTypes');
+const db = require('../configs/db');
 
 router.get('/', async (_, res) => {
-    const types = await getTypes();
-    res.json(
-        types
-            .map(({ categories }) => categories)
-            .reduce((result, current) => {
-                result[current[0].type] = current.map((item) => {
-                    const { title, slug, children = [] } = item;
-                    return {
-                        title,
-                        slug,
-                        children: children.map((child) => {
-                            const { title, slug } = child;
-                            return { title, slug };
-                        }),
-                    };
-                });
-                return result;
-            }, {})
-    );
+    const [first] = await db('Categories').select('*');
+    const { data } = first;
+    const result = JSON.parse(data);
+    res.json(result);
 });
 
 module.exports = router;

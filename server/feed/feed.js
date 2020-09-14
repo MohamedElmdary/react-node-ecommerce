@@ -2,6 +2,7 @@ const initDatabase = require('./initDatabase');
 const { getTypes, getCategories } = require('./getTypes');
 const feedDatabase = require('./feedDatabase');
 const fetchData = require('./fetchData');
+const storeCategories = require('./storeCategories');
 const db = require('../configs/db');
 
 async function feed() {
@@ -18,6 +19,9 @@ async function feed() {
 
         console.log('Feeding Database');
         await feedDatabase(categories, data);
+
+        console.log('Storing Categories');
+        await storeCategories(types);
 
         await db.destroy();
     } catch (err) {
