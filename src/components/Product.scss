@@ -1,0 +1,43 @@
+.product {
+    &__image {
+        position: relative;
+
+        > div {
+            position: absolute;
+            z-index: 2;
+            top: 15px;
+            right: 15px;
+        }
+    }
+
+    &__details {
+        padding: 15px;
+    }
+
+    &__bottombar {
+        position: relative;
+        margin-top: 30px;
+    }
+
+    &__sale {
+        position: absolute;
+        top: -18px;
+        left: 10px;
+
+        p {
+            font-size: 14px;
+            position: relative;
+
+            &::after {
+                content: '';
+                position: absolute;
+                height: 1px;
+                width: calc(100% + 10px);
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                background: #e91e63;
+            }
+        }
+    }
+}

@@ -8,6 +8,8 @@ import Header from './components/Header';
 import Sidenav from './components/Sidenav';
 import { CATEGORIES_URL } from './configs/constants';
 import { DRAWER_WIDTH } from './configs/constants';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import Products from './pages/Products';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -81,7 +83,10 @@ function Home() {
                 })}
             >
                 <div className={classes.drawerHeader} />
-                <p>here go data</p>
+                <Switch>
+                    <Route path="/:type/:category" exact component={Products} />
+                    <Redirect to="/grocery/fruits" />
+                </Switch>
             </main>
         </div>
     );
