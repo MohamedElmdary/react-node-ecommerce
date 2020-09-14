@@ -12,9 +12,16 @@ import './SidenavListItem.scss';
 
 function SidenavListItem({ type, title, slug, children, level }) {
     const history = useHistory();
-    const location = useLocation();
+    const { pathname } = useLocation();
 
-    const [open, setOpen] = useState(false);
+    const level0 = !level && pathname.includes(type);
+    const level1 =
+        level === 1 &&
+        (children || []).reduce((prev, next) => {
+            return prev || pathname.includes(next.slug);
+        }, false);
+
+    const [open, setOpen] = useState(level0 || level1);
     const button = !!(children && children.length);
     const onClick = button
         ? () => {
@@ -24,7 +31,6 @@ function SidenavListItem({ type, title, slug, children, level }) {
               history.push(`/${type}/${slug}`);
           };
 
-    console.log(location.pathname === `/${type}/${slug}`);
     return (
         <>
             <ListItem
@@ -35,7 +41,7 @@ function SidenavListItem({ type, title, slug, children, level }) {
                 className={
                     button
                         ? undefined
-                        : location.pathname === `/${type}/${slug}`
+                        : pathname === `/${type}/${slug}`
                         ? 'active__list__item'
                         : undefined
                 }

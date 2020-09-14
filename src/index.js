@@ -4,6 +4,7 @@ import Home from './Home';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter } from 'react-router-dom';
+import './index.scss';
 
 const theme = createMuiTheme({
     palette: {
