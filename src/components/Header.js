@@ -8,8 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
-
-const drawerWidth = 240;
+import { DRAWER_WIDTH } from '../configs/constants';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -19,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
         }),
     },
     appBarShift: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
+        width: `calc(100% - ${DRAWER_WIDTH}px)`,
+        marginLeft: DRAWER_WIDTH,
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen,

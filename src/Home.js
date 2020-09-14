@@ -7,18 +7,18 @@ import axios from 'axios';
 import Header from './components/Header';
 import Sidenav from './components/Sidenav';
 import { CATEGORIES_URL } from './configs/constants';
+import { DRAWER_WIDTH } from './configs/constants';
 
-const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
     drawer: {
-        width: drawerWidth,
+        width: DRAWER_WIDTH,
         flexShrink: 0,
     },
     drawerPaper: {
-        width: drawerWidth,
+        width: DRAWER_WIDTH,
     },
     drawerHeader: {
         display: 'flex',
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        marginLeft: -drawerWidth,
+        marginLeft: -DRAWER_WIDTH,
     },
     contentShift: {
         transition: theme.transitions.create('margin', {
@@ -57,8 +57,7 @@ function Home() {
 
     useEffect(() => {
         axios.get(CATEGORIES_URL).then((categories) => {
-            console.log(categories);
-            setLinks(categories);
+            setLinks(categories.data);
         });
     }, []);
 

@@ -13,6 +13,13 @@ app
     .use(helmet())
     .use(compression());
 
+// delay for demo
+app.use((req, res, next) => {
+    setTimeout(() => {
+        next();
+    }, 1000);
+});
+
 /* routes */
 app.use('/api/products', require('./routes/products'));
 app.use('/api/categories', require('./routes/categories'));
