@@ -36,7 +36,6 @@ function ProductDetails() {
     let productDtails = <Loading />;
 
     if (!loading) {
-        console.log(product);
         productDtails = (
             <div>
                 <Typography component="h1" variant="h3">

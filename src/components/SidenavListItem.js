@@ -10,7 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import { useHistory, useLocation } from 'react-router-dom';
 import './SidenavListItem.scss';
 
-function SidenavListItem({ type, title, slug, children, level }) {
+function SidenavListItem({ type, title, slug, children, level, closeDrawer }) {
     const history = useHistory();
     const { pathname } = useLocation();
 
@@ -29,6 +29,7 @@ function SidenavListItem({ type, title, slug, children, level }) {
           }
         : () => {
               history.push(`/${type}/${slug}`);
+              closeDrawer();
           };
 
     return (
@@ -61,6 +62,7 @@ function SidenavListItem({ type, title, slug, children, level }) {
                             link.type = type;
                             return link;
                         })}
+                        {...{ closeDrawer }}
                         level={level + 1}
                     />
                 </List>

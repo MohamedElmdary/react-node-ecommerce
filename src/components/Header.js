@@ -30,15 +30,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Header({ open, toggleDrawer }) {
+function Header({ open, toggleDrawer, isSmall }) {
     const classes = useStyles();
 
     return (
         <AppBar
             position="fixed"
-            className={clsx(classes.appBar, {
-                [classes.appBarShift]: open,
-            })}
+            className={
+                isSmall
+                    ? clsx(classes.appBar)
+                    : clsx(classes.appBar, {
+                          [classes.appBarShift]: open,
+                      })
+            }
         >
             <Toolbar>
                 <IconButton

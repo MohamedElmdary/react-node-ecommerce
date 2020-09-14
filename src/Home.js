@@ -11,6 +11,7 @@ import { DRAWER_WIDTH } from './configs/constants';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Home() {
+    const isSmall = useMediaQuery('(max-width: 768px)');
     const classes = useStyles();
     const [open, setOpen] = useState(true);
     const [links, setLinks] = useState(null);
@@ -58,30 +60,52 @@ function Home() {
         setOpen(!open);
     }, [open]);
 
+    const closeDrawer = useCallback(() => {
+        if (isSmall) {
+            setOpen(false);
+        }
+        // eslint-disable-next-line
+    }, [isSmall]);
+
     useEffect(() => {
         axios.get(CATEGORIES_URL).then((categories) => {
             setLinks(categories.data);
         });
     }, []);
 
+    useEffect(() => {
+        if (isSmall && open) {
+            setOpen(false);
+        } else if (!isSmall && !open) {
+            setOpen(true);
+        }
+        // eslint-disable-next-line
+    }, [isSmall]);
+
     return (
         <div className={classes.root}>
-            <Header {...{ open, toggleDrawer }} />
+            <Header {...{ open, toggleDrawer, isSmall }} />
             <Drawer
                 className={classes.drawer}
-                variant="persistent"
+                variant={isSmall ? 'temporary' : 'persistent'}
                 anchor="left"
                 open={open}
                 classes={{
                     paper: classes.drawerPaper,
                 }}
+                onClose={() => {
+                    setOpen(false);
+                }}
             >
-                <Sidenav links={links} />
+                <Sidenav {...{ links, closeDrawer }} />
             </Drawer>
             <main
                 className={clsx(classes.content, {
                     [classes.contentShift]: open,
                 })}
+                style={{
+                    marginLeft: isSmall ? 0 : undefined,
+                }}
             >
                 <div className={classes.drawerHeader} />
                 <Switch>
