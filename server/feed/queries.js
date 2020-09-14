@@ -18,14 +18,12 @@ const getTypesQuery = gql`
 const getProductsQuery = gql`
     query getProducts(
         $type: String
-        $text: String
         $category: String
         $offset: Int
         $limit: Int
     ) {
         products(
             type: $type
-            text: $text
             category: $category
             offset: $offset
             limit: $limit
