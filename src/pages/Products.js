@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Loading from '../components/Loading';
 
-function Products({ match: { params } }) {
+function Products({ match: { params }, cart, setCart }) {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -53,7 +53,13 @@ function Products({ match: { params } }) {
                             return (
                                 <Product
                                     key={product.id}
-                                    {...{ product, type, category }}
+                                    {...{
+                                        product,
+                                        type,
+                                        category,
+                                        cart,
+                                        setCart,
+                                    }}
                                 />
                             );
                         })}

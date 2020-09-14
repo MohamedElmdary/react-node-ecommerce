@@ -12,6 +12,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import CartController from './classes/cartController';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,6 +56,7 @@ function Home() {
     const classes = useStyles();
     const [open, setOpen] = useState(true);
     const [links, setLinks] = useState(null);
+    const [cart, setCart] = useState([]);
 
     const toggleDrawer = useCallback(() => {
         setOpen(!open);
@@ -71,6 +73,8 @@ function Home() {
         axios.get(CATEGORIES_URL).then((categories) => {
             setLinks(categories.data);
         });
+
+        setCart(CartController.get());
     }, []);
 
     useEffect(() => {
@@ -84,7 +88,7 @@ function Home() {
 
     return (
         <div className={classes.root}>
-            <Header {...{ open, toggleDrawer, isSmall }} />
+            <Header {...{ open, toggleDrawer, isSmall, cart, setCart }} />
             <Drawer
                 className={classes.drawer}
                 variant={isSmall ? 'temporary' : 'persistent'}
@@ -109,7 +113,13 @@ function Home() {
             >
                 <div className={classes.drawerHeader} />
                 <Switch>
-                    <Route path="/:type/:category" exact component={Products} />
+                    <Route
+                        path="/:type/:category"
+                        exact
+                        render={(props) => (
+                            <Products {...props} {...{ cart, setCart }} />
+                        )}
+                    />
                     <Route
                         path="/:type/:category/:id"
                         exact

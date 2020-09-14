@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-
+import CartIcon from '@material-ui/icons/ShoppingCart';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import { DRAWER_WIDTH } from '../configs/constants';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -30,8 +35,18 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Header({ open, toggleDrawer, isSmall }) {
+function Header({ open, toggleDrawer, isSmall, cart, setCart }) {
+    const [anchorEl, setAnchorEl] = useState(null);
     const classes = useStyles();
+    const isMobile = useMediaQuery('(max-width: 550px)');
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <AppBar
@@ -61,6 +76,73 @@ function Header({ open, toggleDrawer, isSmall }) {
                 >
                     easy shopping
                 </Typography>
+                <IconButton
+                    style={{ marginLeft: 'auto' }}
+                    color="inherit"
+                    onClick={handleClick}
+                    className={clsx(classes.menuButton)}
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                >
+                    <CartIcon />
+                </IconButton>
+                <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                    PaperProps={{
+                        style: {
+                            minWidth: isMobile ? 'calc(100% - 30px)' : '500px',
+                            maxHeight: 'calc(100vh - 30px)',
+                        },
+                    }}
+                >
+                    {cart && cart.length ? (
+                        cart.map(({ count, product }) => {
+                            return (
+                                <MenuItem
+                                    key={product.id}
+                                    button={false}
+                                    style={{ outline: 'none' }}
+                                >
+                                    {product.title} - {count}
+                                </MenuItem>
+                            );
+                        })
+                    ) : (
+                        <MenuItem button={false} style={{ outline: 'none' }}>
+                            <p style={{ textAlign: 'center', width: '100%' }}>
+                                Please Add Products To Yor Cart.
+                            </p>
+                        </MenuItem>
+                    )}
+                    <Divider />
+                    <MenuItem
+                        button={false}
+                        style={{
+                            outline: 'none',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Button
+                            style={{
+                                width: '100%',
+                            }}
+                            color="primary"
+                            size="large"
+                            onClick={() => {
+                                setAnchorEl(null);
+                                console.log('should checkout');
+                            }}
+                        >
+                            Checkout
+                        </Button>
+                    </MenuItem>
+                </Menu>
             </Toolbar>
         </AppBar>
     );
