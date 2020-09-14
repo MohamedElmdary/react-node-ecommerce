@@ -10,6 +10,7 @@ import { CATEGORIES_URL } from './configs/constants';
 import { DRAWER_WIDTH } from './configs/constants';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Products from './pages/Products';
+import ProductDetails from './pages/ProductDetails';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -85,6 +86,11 @@ function Home() {
                 <div className={classes.drawerHeader} />
                 <Switch>
                     <Route path="/:type/:category" exact component={Products} />
+                    <Route
+                        path="/:type/:category/:id"
+                        exact
+                        component={ProductDetails}
+                    />
                     <Redirect to="/grocery/fruits" />
                 </Switch>
             </main>

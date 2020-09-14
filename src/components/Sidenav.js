@@ -1,24 +1,10 @@
 import React from 'react';
 import List from '@material-ui/core/List';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-/* icons */
+import Loading from './Loading';
 import SidenavList from './SidenavList';
 
 function Sidenav({ links }) {
-    let children = (
-        <div
-            style={{
-                display: 'flex',
-                height: '100%',
-                width: '100%',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-        >
-            <CircularProgress />
-        </div>
-    );
+    let children = <Loading />;
     if (links) {
         children = (
             <List>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PRODUCTS_URL } from '../configs/constants';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Product from '../components/Product';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Loading from '../components/Loading';
 
 function Products({ match: { params } }) {
     const [products, setProducts] = useState([]);
@@ -19,24 +19,15 @@ function Products({ match: { params } }) {
             .then(({ data }) => {
                 setProducts(data);
             })
+            .catch((err) => {
+                console.log('Error', err);
+            })
             .finally(() => {
                 setLoading(false);
             });
     }, [type, category]);
 
-    let productsResult = (
-        <div
-            style={{
-                display: 'flex',
-                height: '100%',
-                width: '100%',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-        >
-            <CircularProgress />
-        </div>
-    );
+    let productsResult = <Loading />;
 
     if (!loading) {
         if (products.length) {
@@ -60,7 +51,10 @@ function Products({ match: { params } }) {
                     <Grid container spacing={3} alignItems="stretch">
                         {products.map((product) => {
                             return (
-                                <Product key={product.id} {...{ product }} />
+                                <Product
+                                    key={product.id}
+                                    {...{ product, type, category }}
+                                />
                             );
                         })}
                     </Grid>

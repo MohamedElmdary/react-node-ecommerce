@@ -1,19 +1,34 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CartIcon from '@material-ui/icons/ShoppingCart';
+import { useHistory } from 'react-router-dom';
 
 import './Product.scss';
 
-function Product({ product }) {
-    const { image, title, unit, price, salePrice, discountInPercent } = product;
+function Product({ product, type, category }) {
+    const history = useHistory();
+    const {
+        id,
+        image,
+        title,
+        unit,
+        price,
+        salePrice,
+        discountInPercent,
+    } = product;
+
+    const onClick = useCallback(() => {
+        history.push(`/${type}/${category}/${id}`);
+        // eslint-disable-next-line
+    }, [type, category, id]);
 
     return (
         <Grid item lg={12 / 4} md={12 / 3} sm={12 / 2} xs={12}>
-            <Paper className="product">
+            <Paper className="product" {...{ onClick }}>
                 <div className="product__image">
                     {discountInPercent > 0 ? (
                         <div>
@@ -64,6 +79,10 @@ function Product({ product }) {
                                     variant="outlined"
                                     color="primary"
                                     startIcon={<CartIcon />}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        console.log('Add To Cart', product);
+                                    }}
                                 >
                                     Cart
                                 </Button>
