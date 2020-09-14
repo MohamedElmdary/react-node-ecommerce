@@ -12,15 +12,8 @@ function Product({ product }) {
     const { image, title, unit, price, salePrice, discountInPercent } = product;
 
     return (
-        <Grid
-            item
-            lg={12 / 4}
-            md={12 / 3}
-            sm={12 / 2}
-            xs={12}
-            className="product"
-        >
-            <Paper style={{ overflow: 'hidden' }}>
+        <Grid item lg={12 / 4} md={12 / 3} sm={12 / 2} xs={12}>
+            <Paper className="product">
                 <div className="product__image">
                     {discountInPercent > 0 ? (
                         <div>

@@ -4,23 +4,27 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import SidenavList from './SidenavList';
-
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Divider from '@material-ui/core/Divider';
+import { useHistory, useLocation } from 'react-router-dom';
+import './SidenavListItem.scss';
 
 function SidenavListItem({ type, title, slug, children, level }) {
+    const history = useHistory();
+    const location = useLocation();
+
     const [open, setOpen] = useState(false);
     const button = !!(children && children.length);
     const onClick = button
         ? () => {
               setOpen(!open);
           }
-        : undefined;
-    // () => {
-    //       console.log(type, slug);
-    //   };
+        : () => {
+              history.push(`/${type}/${slug}`);
+          };
 
+    console.log(location.pathname === `/${type}/${slug}`);
     return (
         <>
             <ListItem
@@ -28,6 +32,13 @@ function SidenavListItem({ type, title, slug, children, level }) {
                 style={{
                     paddingLeft: `${20 * (level + 1)}px`,
                 }}
+                className={
+                    button
+                        ? undefined
+                        : location.pathname === `/${type}/${slug}`
+                        ? 'active__list__item'
+                        : undefined
+                }
             >
                 <ListItemText
                     primary={title}

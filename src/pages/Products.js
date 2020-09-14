@@ -4,6 +4,7 @@ import { PRODUCTS_URL } from '../configs/constants';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Product from '../components/Product';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 function Products({ match: { params } }) {
     const [products, setProducts] = useState([]);
@@ -40,11 +41,30 @@ function Products({ match: { params } }) {
     if (!loading) {
         if (products.length) {
             productsResult = (
-                <Grid container spacing={3}>
-                    {products.map((product) => {
-                        return <Product key={product.id} {...{ product }} />;
-                    })}
-                </Grid>
+                <>
+                    <Typography
+                        variant="h4"
+                        component="h2"
+                        style={{
+                            marginBottom: '30px',
+                        }}
+                    >
+                        <span style={{ textTransform: 'uppercase' }}>
+                            {type}
+                        </span>{' '}
+                        &gt;{' '}
+                        <span style={{ textTransform: 'capitalize' }}>
+                            {category}
+                        </span>
+                    </Typography>
+                    <Grid container spacing={3} alignItems="stretch">
+                        {products.map((product) => {
+                            return (
+                                <Product key={product.id} {...{ product }} />
+                            );
+                        })}
+                    </Grid>
+                </>
             );
         } else {
             productsResult = (
