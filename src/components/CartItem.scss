@@ -1,0 +1,21 @@
+.cartitem {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    &__left {
+        display: flex;
+    }
+
+    &__image {
+        height: 60px;
+        padding: 5px 0;
+        margin-right: 10px;
+
+        > img {
+            height: 100%;
+        }
+    }
+}

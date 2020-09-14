@@ -14,6 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import CartItem from './CartItem';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Header({ open, toggleDrawer, isSmall, cart, setCart }) {
+function Header({ open, toggleDrawer, isSmall, cart, setCart, showDrawer }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const classes = useStyles();
     const isMobile = useMediaQuery('(max-width: 550px)');
@@ -48,6 +49,13 @@ function Header({ open, toggleDrawer, isSmall, cart, setCart }) {
         setAnchorEl(null);
     };
 
+    const fullPrice = cart
+        .reduce((total, { count, product }) => {
+            const { price, salePrice } = product;
+            return total + count * (salePrice || price);
+        }, 0)
+        .toFixed(2);
+
     return (
         <AppBar
             position="fixed"
@@ -55,20 +63,22 @@ function Header({ open, toggleDrawer, isSmall, cart, setCart }) {
                 isSmall
                     ? clsx(classes.appBar)
                     : clsx(classes.appBar, {
-                          [classes.appBarShift]: open,
+                          [classes.appBarShift]: showDrawer && open,
                       })
             }
         >
             <Toolbar>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={toggleDrawer}
-                    edge="start"
-                    className={clsx(classes.menuButton)}
-                >
-                    {open ? <CloseIcon /> : <MenuIcon />}
-                </IconButton>
+                {showDrawer ? (
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={toggleDrawer}
+                        edge="start"
+                        className={clsx(classes.menuButton)}
+                    >
+                        {open ? <CloseIcon /> : <MenuIcon />}
+                    </IconButton>
+                ) : null}
                 <Typography
                     variant="h6"
                     noWrap
@@ -76,16 +86,18 @@ function Header({ open, toggleDrawer, isSmall, cart, setCart }) {
                 >
                     easy shopping
                 </Typography>
-                <IconButton
-                    style={{ marginLeft: 'auto' }}
-                    color="inherit"
-                    onClick={handleClick}
-                    className={clsx(classes.menuButton)}
-                    aria-controls="simple-menu"
-                    aria-haspopup="true"
-                >
-                    <CartIcon />
-                </IconButton>
+                {showDrawer ? (
+                    <IconButton
+                        style={{ marginLeft: 'auto' }}
+                        color="inherit"
+                        onClick={handleClick}
+                        className={clsx(classes.menuButton)}
+                        aria-controls="simple-menu"
+                        aria-haspopup="true"
+                    >
+                        <CartIcon />
+                    </IconButton>
+                ) : null}
                 <Menu
                     id="simple-menu"
                     anchorEl={anchorEl}
@@ -107,7 +119,9 @@ function Header({ open, toggleDrawer, isSmall, cart, setCart }) {
                                     button={false}
                                     style={{ outline: 'none' }}
                                 >
-                                    {product.title} - {count}
+                                    <CartItem
+                                        {...{ count, product, setCart }}
+                                    />
                                 </MenuItem>
                             );
                         })
@@ -139,7 +153,7 @@ function Header({ open, toggleDrawer, isSmall, cart, setCart }) {
                                 console.log('should checkout');
                             }}
                         >
-                            Checkout
+                            Checkout - {fullPrice}$
                         </Button>
                     </MenuItem>
                 </Menu>

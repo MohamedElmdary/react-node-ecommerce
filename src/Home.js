@@ -3,16 +3,18 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import axios from 'axios';
-
 import Header from './components/Header';
 import Sidenav from './components/Sidenav';
 import { CATEGORIES_URL } from './configs/constants';
 import { DRAWER_WIDTH } from './configs/constants';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, useLocation } from 'react-router-dom';
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import CartController from './classes/cartController';
+import LandingPage from './pages/LandingPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,6 +59,8 @@ function Home() {
     const [open, setOpen] = useState(true);
     const [links, setLinks] = useState(null);
     const [cart, setCart] = useState([]);
+    const { pathname } = useLocation();
+    const [showDrawer, setShowDrawer] = useState(false);
 
     const toggleDrawer = useCallback(() => {
         setOpen(!open);
@@ -83,17 +87,29 @@ function Home() {
         } else if (!isSmall && !open) {
             setOpen(true);
         }
+
+        if (/\/\w+\/\w+(\/\w+)?/.test(pathname)) {
+            if (!showDrawer) {
+                setShowDrawer(true);
+            }
+        } else {
+            if (showDrawer) {
+                setShowDrawer(false);
+            }
+        }
         // eslint-disable-next-line
-    }, [isSmall]);
+    }, [isSmall, pathname]);
 
     return (
         <div className={classes.root}>
-            <Header {...{ open, toggleDrawer, isSmall, cart, setCart }} />
+            <Header
+                {...{ open, toggleDrawer, isSmall, cart, setCart, showDrawer }}
+            />
             <Drawer
                 className={classes.drawer}
                 variant={isSmall ? 'temporary' : 'persistent'}
                 anchor="left"
-                open={open}
+                open={showDrawer && open}
                 classes={{
                     paper: classes.drawerPaper,
                 }}
@@ -105,7 +121,7 @@ function Home() {
             </Drawer>
             <main
                 className={clsx(classes.content, {
-                    [classes.contentShift]: open,
+                    [classes.contentShift]: showDrawer && open,
                 })}
                 style={{
                     marginLeft: isSmall ? 0 : undefined,
@@ -113,6 +129,9 @@ function Home() {
             >
                 <div className={classes.drawerHeader} />
                 <Switch>
+                    <Route path="/" exact component={LandingPage} />
+                    <Route path="/login" exact component={Login} />
+                    <Route path="/register" exact component={Register} />
                     <Route
                         path="/:type/:category"
                         exact
