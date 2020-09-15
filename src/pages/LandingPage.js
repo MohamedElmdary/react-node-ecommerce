@@ -1,15 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import './LandingPage.scss';
 
-function LandingPage() {
+import Entry from '../components/LandingPage/Entry';
+import AboutUs from '../components/LandingPage/AboutUs';
+
+// import Typography from '@material-ui/core/Typography';
+// import Grid from '@material-ui/core/Grid';
+// import AboutUsItem from '../components/LandingPage/AboutusItem';
+
+function LandingPage({ history, links }) {
+    console.log(links);
+
     return (
-        <div>
-            <h1>landing page</h1>
-            <Link to="/login">Login</Link>
-
-            <Link to="/register">register</Link>
-
-            <Link to="/grocery/meat">shopping</Link>
+        <div className="landing">
+            <Entry {...{ history }} />
+            <AboutUs />
         </div>
     );
 }

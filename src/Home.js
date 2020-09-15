@@ -129,7 +129,13 @@ function Home() {
             >
                 <div className={classes.drawerHeader} />
                 <Switch>
-                    <Route path="/" exact component={LandingPage} />
+                    <Route
+                        path="/"
+                        exact
+                        render={(props) => (
+                            <LandingPage {...{ ...props, links }} />
+                        )}
+                    />
                     <Route path="/login" exact component={Login} />
                     <Route path="/register" exact component={Register} />
                     <Route
