@@ -3,13 +3,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import { VIDEO_URL } from '../../configs/constants';
-const mobile = require('../../assets/images/mobile.png');
-
 function Entry({ history }) {
     return (
         <div className="landing__video">
-            <video autoPlay loop src={VIDEO_URL}></video>
+            <video autoPlay loop src="/assets/videos/preview.mp4" muted></video>
             <div className="landing__video__content">
                 <Grid container spacing={3}>
                     <Grid item md={8}>
@@ -48,7 +45,10 @@ function Entry({ history }) {
                     </Grid>
                     <Grid item md={4}>
                         <div className="landing__video__content__image">
-                            <img src={mobile} alt="product preview" />
+                            <img
+                                src="/assets/images/mobile.png"
+                                alt="product preview"
+                            />
                         </div>
                     </Grid>
                 </Grid>
