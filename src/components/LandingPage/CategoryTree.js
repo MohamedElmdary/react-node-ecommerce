@@ -2,7 +2,6 @@ import React from 'react';
 import './CategoryTree.scss';
 
 function CategoryTree({ tree, level = 0, history, type }) {
-    const newType = !level ? tree[0].type : type;
     const treeCmp = tree.map((branch) => {
         const { title, children = [] } = branch;
         const noChildren = !children || !children.length;
@@ -38,7 +37,7 @@ function CategoryTree({ tree, level = 0, history, type }) {
                             history,
                             level: level + 1,
                             tree: children,
-                            type: newType,
+                            type: type || branch.type,
                         }}
                     />
                 </div>

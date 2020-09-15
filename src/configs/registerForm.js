@@ -1,18 +1,18 @@
+import { NAME_REGEX, EMAIL_REGEX } from './constants';
+
 const registerForm = {
     username: [
         'username',
         (state) => {
             const s = state.trim();
-            return /^[A-Za-z ]+$/.test(s) && s.length > 1 && s.length < 20;
+            return NAME_REGEX.test(s) && s.length > 1 && s.length < 20;
         },
         'Username is requried & min length is 2 chars & max is 20.',
     ],
     email: [
         'email',
         (state) => {
-            // eslint-disable-next-line
-            const emailREgex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return emailREgex.test(state);
+            return EMAIL_REGEX.test(state);
         },
         'Invalid email format.',
     ],

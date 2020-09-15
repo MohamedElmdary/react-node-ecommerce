@@ -22,11 +22,10 @@ function Categories({ links, history }) {
     return (
         <div className="landing__categories">
             <Typography component="h2" variant="h3">
-                Our Categories
+                More Links
             </Typography>
             <Grid container spacing={3}>
                 {trees.map((tree, i) => {
-                    console.log('title', tree.title);
                     return tree.length ? (
                         <Grid item sm={4} xs={6} key={i}>
                             <CategoryTree {...{ tree, history }} />

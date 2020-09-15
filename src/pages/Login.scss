@@ -10,11 +10,6 @@
         padding: 15px 20px;
     }
 
-    .form-control-item {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
     &__actions {
         display: flex;
         justify-content: center;
@@ -30,4 +25,9 @@
             text-decoration: underline;
         }
     }
+}
+
+.form-control-item {
+    width: 100%;
+    margin-bottom: 20px;
 }

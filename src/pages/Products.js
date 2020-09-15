@@ -29,7 +29,7 @@ function Products({ match: { params }, cart, setCart }) {
 
     let productsResult = <Loading />;
 
-    if (!loading) {
+    if (!loading && products && products.length) {
         if (products.length) {
             productsResult = (
                 <>
@@ -45,7 +45,7 @@ function Products({ match: { params }, cart, setCart }) {
                         </span>{' '}
                         &gt;{' '}
                         <span style={{ textTransform: 'capitalize' }}>
-                            {category}
+                            {category.replace(/_/g, ' ')}
                         </span>
                     </Typography>
                     <Grid container spacing={3} alignItems="stretch">

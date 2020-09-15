@@ -4,6 +4,7 @@ import './LandingPage.scss';
 import Entry from '../components/LandingPage/Entry';
 import AboutUs from '../components/LandingPage/AboutUs';
 import Categories from '../components/LandingPage/Categories';
+import ContactUs from '../components/LandingPage/ContactUs';
 
 // import Typography from '@material-ui/core/Typography';
 // import Grid from '@material-ui/core/Grid';
@@ -14,6 +15,7 @@ function LandingPage({ history, links }) {
         <div className="landing">
             <Entry {...{ history }} />
             <AboutUs />
+            <ContactUs />
             <Categories {...{ links, history }} />
         </div>
     );
