@@ -3,27 +3,21 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import CategoryTree from './CategoryTree';
+import Divider from '@material-ui/core/Divider';
 
-function Categories({ links }) {
+function Categories({ links, history }) {
     const keys = Object.keys(links || {});
     const trees = [[], [], []];
 
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
-        if (i === 0) {
-            trees[0].push({
-                title: key,
-                children: links[key],
-            });
-        } else {
-            trees[1 + (i % 2)].push({
-                title: key,
-                children: links[key],
-            });
-        }
-    }
 
-    console.log(trees);
+        trees[!i ? 0 : 1 + (i % 2)].push({
+            type: key,
+            title: key,
+            children: links[key],
+        });
+    }
 
     return (
         <div className="landing__categories">
@@ -31,14 +25,16 @@ function Categories({ links }) {
                 Our Categories
             </Typography>
             <Grid container spacing={3}>
-                {trees.map((tree, i) =>
-                    tree.length ? (
+                {trees.map((tree, i) => {
+                    console.log('title', tree.title);
+                    return tree.length ? (
                         <Grid item sm={4} xs={6} key={i}>
-                            <CategoryTree {...{ tree }} />
+                            <CategoryTree {...{ tree, history }} />
                         </Grid>
-                    ) : null
-                )}
+                    ) : null;
+                })}
             </Grid>
+            <Divider />
         </div>
     );
 }

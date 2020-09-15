@@ -14,7 +14,7 @@ function LandingPage({ history, links }) {
         <div className="landing">
             <Entry {...{ history }} />
             <AboutUs />
-            <Categories {...{ links }} />
+            <Categories {...{ links, history }} />
         </div>
     );
 }

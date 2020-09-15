@@ -1,9 +1,12 @@
 import React from 'react';
 import './CategoryTree.scss';
 
-function CategoryTree({ tree, level = 0 }) {
+function CategoryTree({ tree, level = 0, history, type }) {
+    const newType = !level ? tree[0].type : type;
     const treeCmp = tree.map((branch) => {
         const { title, children = [] } = branch;
+        const noChildren = !children || !children.length;
+
         return (
             <div
                 style={{
@@ -18,14 +21,26 @@ function CategoryTree({ tree, level = 0 }) {
                 className="categorytree"
             >
                 <p
+                    onClick={
+                        noChildren
+                            ? () => history.push(`/${type}/${branch.slug}`)
+                            : undefined
+                    }
                     className={`level-${level} ${
-                        !children || !children.length ? 'no-children' : ''
+                        noChildren ? 'no-children link' : ''
                     }`}
                 >
                     {title}
                 </p>
                 <div>
-                    <CategoryTree tree={children} level={level + 1} />
+                    <CategoryTree
+                        {...{
+                            history,
+                            level: level + 1,
+                            tree: children,
+                            type: newType,
+                        }}
+                    />
                 </div>
             </div>
         );

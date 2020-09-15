@@ -4,6 +4,15 @@
         text-transform: capitalize;
         position: relative;
 
+        &.link {
+            color: steelblue;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
         &::after {
             content: '';
             position: absolute;
