@@ -12,8 +12,10 @@ app
     .use(cors())
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({extended: true}))
-    .use(helmet())
-    .use(compression())
+    .use(helmet({
+        contentSecurityPolicy: false
+    }))
+    .use(compression());
 
 // delay for demo
 if (!process.env.PORT) {

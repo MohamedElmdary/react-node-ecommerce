@@ -2,6 +2,7 @@ const URL =
     process.env.NODE_ENV === 'development'
         ? 'http://localhost:8080/api'
         : '/api';
+// const URL = 'http://localhost:8080/api';
 
 const CATEGORIES_URL = `${URL}/categories`;
 const PRODUCTS_URL = `${URL}/products`;
