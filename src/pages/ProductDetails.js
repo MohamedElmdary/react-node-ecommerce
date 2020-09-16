@@ -4,8 +4,8 @@ import { PRODUCTS_URL } from '../configs/constants';
 import { useLocation, useHistory } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Loading from '../components/Loading';
-import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
+import GallerySlider from '../components/GallerySlider';
 
 function ProductDetails() {
     const history = useHistory();
@@ -55,19 +55,7 @@ function ProductDetails() {
                         margin: '20px auto',
                     }}
                 >
-                    <Grid
-                        style={{
-                            textAlign: 'center',
-                            display: 'inline-block',
-                            padding: '15px',
-                        }}
-                    >
-                        <img
-                            src={product.image}
-                            alt={product.title + ' preview'}
-                            style={{ maxWidth: '300px' }}
-                        />
-                    </Grid>
+                    <GallerySlider gallery={product.gallery} />
                 </div>
                 <div>
                     <Typography component="p">

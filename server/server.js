@@ -17,7 +17,7 @@ app
 app.use((req, res, next) => {
     setTimeout(() => {
         next();
-    }, 0);
+    }, 500);
 });
 
 /* routes */
