@@ -15,6 +15,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import CartItem from './CartItem';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Header({ open, toggleDrawer, isSmall, cart, setCart, showDrawer }) {
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const classes = useStyles();
     const isMobile = useMediaQuery('(max-width: 550px)');
@@ -97,7 +99,15 @@ function Header({ open, toggleDrawer, isSmall, cart, setCart, showDrawer }) {
                     >
                         <CartIcon />
                     </IconButton>
-                ) : null}
+                ) : (
+                    <Button
+                        style={{ marginLeft: 'auto' }}
+                        color="inherit"
+                        onClick={() => history.push('/grocery/fruits')}
+                    >
+                        Go To Shop
+                    </Button>
+                )}
                 <Menu
                     id="simple-menu"
                     anchorEl={anchorEl}
@@ -133,29 +143,31 @@ function Header({ open, toggleDrawer, isSmall, cart, setCart, showDrawer }) {
                         </MenuItem>
                     )}
                     <Divider />
-                    <MenuItem
-                        button={false}
-                        style={{
-                            outline: 'none',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Button
+                    {cart && cart.length ? (
+                        <MenuItem
+                            button={false}
                             style={{
-                                width: '100%',
-                            }}
-                            color="primary"
-                            size="large"
-                            onClick={() => {
-                                setAnchorEl(null);
-                                console.log('should checkout');
+                                outline: 'none',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
                             }}
                         >
-                            Checkout - {fullPrice}$
-                        </Button>
-                    </MenuItem>
+                            <Button
+                                style={{
+                                    width: '100%',
+                                }}
+                                color="primary"
+                                size="large"
+                                onClick={() => {
+                                    setAnchorEl(null);
+                                    history.push('/check-out');
+                                }}
+                            >
+                                Checkout - {fullPrice}$
+                            </Button>
+                        </MenuItem>
+                    ) : null}
                 </Menu>
             </Toolbar>
         </AppBar>

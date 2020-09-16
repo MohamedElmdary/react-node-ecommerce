@@ -12,7 +12,7 @@ function CartItem({ count, product, setCart }) {
 
     return (
         <div className="cartitem">
-            <div className="cartitem__left">
+            <div className="cartitem__left" style={{ marginRight: '15px' }}>
                 <div className="cartitem__image">
                     <img src={image} alt={title} />
                 </div>

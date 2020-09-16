@@ -41,6 +41,7 @@ function Login() {
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <TextField
+                            style={{ margin: '20px 0' }}
                             type="password"
                             className="form-control-item"
                             variant="outlined"
