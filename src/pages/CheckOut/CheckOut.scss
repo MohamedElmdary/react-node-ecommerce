@@ -1,0 +1,20 @@
+.checkout {
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        &__inner {
+            max-width: 700px;
+            width: 100%;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: center;
+        margin-top: 25px;
+        margin-bottom: 100px;
+    }
+}

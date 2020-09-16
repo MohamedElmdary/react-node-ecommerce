@@ -15,6 +15,7 @@ import CartController from './classes/cartController';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import CheckOut from './pages/CheckOut';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -143,6 +144,13 @@ function Home() {
                         exact
                         render={(props) => (
                             <Products {...props} {...{ cart, setCart }} />
+                        )}
+                    />
+                    <Route
+                        path="/check-out"
+                        exact
+                        render={(props) => (
+                            <CheckOut {...props} {...{ cart }} />
                         )}
                     />
                     <Route
