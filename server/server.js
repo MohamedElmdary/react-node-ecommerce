@@ -9,7 +9,6 @@ const { join } = require('path');
 // prettier-ignore
 app
     .use(express.static(join(__dirname, '..', 'build')))
-    .use(cors())
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({extended: true}))
     .use(helmet({
@@ -19,7 +18,10 @@ app
 
 // delay for demo
 if (!process.env.PORT) {
-    app.use((_, __, next) => {
+    // prettier-ignore
+    app
+    .use(cors())
+    .use((_, __, next) => {
         setTimeout(() => {
             next();
         }, 500);
