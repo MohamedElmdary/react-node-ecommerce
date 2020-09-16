@@ -148,7 +148,9 @@ function Home() {
                     <Route
                         path="/:type/:category/:id"
                         exact
-                        component={ProductDetails}
+                        render={(props) => (
+                            <ProductDetails {...props} {...{ cart, setCart }} />
+                        )}
                     />
                     <Redirect to="/grocery/fruits" />
                 </Switch>

@@ -3,12 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import CartIcon from '@material-ui/icons/ShoppingCart';
-import RemoveCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import { useHistory } from 'react-router-dom';
-import CartController from '../classes/cartController';
 import './Product.scss';
+import ToggleCartButton from './ToggleCartButton';
 
 function Product({ product, type, category, cart, setCart }) {
     const history = useHistory();
@@ -26,10 +23,6 @@ function Product({ product, type, category, cart, setCart }) {
         history.push(`/${type}/${category}/${id}`);
         // eslint-disable-next-line
     }, [type, category, id]);
-
-    const itemInCart = cart.reduce((res, { product }) => {
-        return res || product.id === id;
-    }, false);
 
     return (
         <Grid item lg={12 / 4} md={12 / 3} sm={12 / 2} xs={12}>
@@ -79,29 +72,9 @@ function Product({ product, type, category, cart, setCart }) {
                                 </div>
                             </Grid>
                             <Grid item>
-                                <Button
-                                    size="small"
-                                    variant="outlined"
-                                    color="primary"
-                                    startIcon={
-                                        itemInCart ? (
-                                            <RemoveCartIcon />
-                                        ) : (
-                                            <CartIcon />
-                                        )
-                                    }
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        setCart(
-                                            CartController.merge(
-                                                product,
-                                                !itemInCart
-                                            )
-                                        );
-                                    }}
-                                >
-                                    {itemInCart ? `Remove` : 'Add'}
-                                </Button>
+                                <ToggleCartButton
+                                    {...{ cart, setCart, product }}
+                                />
                             </Grid>
                         </Grid>
                     </div>

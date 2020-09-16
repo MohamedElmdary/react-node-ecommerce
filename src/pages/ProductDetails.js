@@ -6,8 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import Loading from '../components/Loading';
 import Divider from '@material-ui/core/Divider';
 import GallerySlider from '../components/GallerySlider';
+import Grid from '@material-ui/core/Grid';
+import ToggleCartButton from '../components/ToggleCartButton';
 
-function ProductDetails() {
+function ProductDetails({ cart, setCart }) {
     const history = useHistory();
     const { pathname } = useLocation();
     const [product, setProduct] = useState(null);
@@ -67,10 +69,17 @@ function ProductDetails() {
                 <Divider />
                 <br />
                 <div>
-                    <Typography component="p" variant="h6">
-                        {/* /n */}
-                        Price: {product.salePrice || product.price}$
-                    </Typography>
+                    <Grid container justify="space-between">
+                        <Grid item>
+                            <Typography component="p" variant="h6">
+                                {/* /n */}
+                                Price: {product.salePrice || product.price}$
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <ToggleCartButton {...{ cart, setCart, product }} />
+                        </Grid>
+                    </Grid>
                 </div>
             </div>
         );
