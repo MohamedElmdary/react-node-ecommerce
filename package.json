@@ -27,7 +27,7 @@
     "start": "node ./server/server.js",
     "start:server": "nodemon ./server/server.js",
     "start:client": "react-scripts start",
-    "build:client": "react-scripts build",
+    "build:client": "INLINE_RUNTIME_CHUNK=false react-scripts build",
     "build:server": "node ./server/feed/feed.js",
     "build": "npm run build:client && npm run build:server",
     "test": "react-scripts test",
