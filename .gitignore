@@ -8,6 +8,9 @@
 # server
 data.db
 
+# generated data
+/database
+
 # testing
 /coverage
 
