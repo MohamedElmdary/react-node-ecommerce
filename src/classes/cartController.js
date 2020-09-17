@@ -10,6 +10,17 @@ class CartController {
         return cart;
     }
 
+    static remove({ id }) {
+        const cart = CartController.get();
+        const idx = cart.findIndex(({ product }) => {
+            return product.id === id;
+        });
+        if (idx > -1) {
+            cart.splice(idx, 1);
+        }
+        return CartController.set(cart);
+    }
+
     static merge(product, increase = true) {
         const { id } = product;
         const cart = CartController.get();

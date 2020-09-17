@@ -12,7 +12,11 @@ function ToggleCartButton({ cart, setCart, product }) {
     const startIcon = itemInCart ? <RemoveCartIcon /> : <CartIcon />;
     const onClick = (e) => {
         e.stopPropagation();
-        setCart(CartController.merge(product, !itemInCart));
+        if (itemInCart) {
+            setCart(CartController.remove(product));
+        } else {
+            setCart(CartController.merge(product));
+        }
     };
 
     return (
