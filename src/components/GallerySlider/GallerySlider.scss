@@ -25,9 +25,18 @@
             padding: 3px;
             border: 2px solid #ccc;
             border-radius: 3px;
-            height: 70px;
             width: 70px;
             cursor: pointer;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &.last-item {
+                @media (min-width: 600px) {
+                    margin-bottom: 0;
+                }
+            }
 
             &.active {
                 border-color: #3f51b5;
@@ -41,8 +50,11 @@
 
     &__preview {
         max-width: 400px;
-        padding: 3px;
+        padding: 15px 20px;
         border: 2px solid #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         > img {
             width: 100%;
